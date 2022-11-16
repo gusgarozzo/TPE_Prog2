@@ -8,9 +8,9 @@ public class ListaEnlazada implements Iterable<Object>{
     private int size;
     private Comparator<Object> criterio;
 
-    public ListaEnlazada( Comparator<Object> criterio) {
+    public ListaEnlazada( Comparator<Object> criterio, int size) {
         this.cabeza = null;
-        this.size = 0;
+        this.size = size;
         this.criterio = criterio;
     }
 
@@ -119,6 +119,10 @@ public class ListaEnlazada implements Iterable<Object>{
             }
             return buscado;
         }
+    }
+
+    public void setSize(int size){
+         this.size = size;
     }
 
     @Override

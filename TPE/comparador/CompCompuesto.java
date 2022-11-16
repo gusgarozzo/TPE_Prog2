@@ -16,12 +16,10 @@ public class CompCompuesto extends Compare {
 	public int compare(Object o1, Object o2) {
 	
         Alumno a = (Alumno)o1;
-        Alumno b = (Alumno)o1;
+        Alumno b = (Alumno)o2;
 	    int	resultado = comp1.compare(a, b);
-        System.out.println(resultado);	
 			if(resultado == 0);
-				comp2.compare(a, b);
-                System.out.println("2 " + resultado);	
+				resultado = comp2.compare(a, b);
 			return resultado;
 	}
     
