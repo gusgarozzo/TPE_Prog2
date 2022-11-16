@@ -1,12 +1,16 @@
 package TPE;
 
 public class Nodo {
-    Object valor;
-    Nodo siguiente;
+    private Object valor;
+    private Nodo siguiente;
 
-    public Nodo() {
-        this.valor = null;
+    public Nodo(Object valor) {
+        this.valor = valor;
         this.siguiente = null;
+    }
+
+    public Object obtenerValor(){
+        return valor;
     }
 
     public void setValor(Object valor) {
@@ -21,7 +25,12 @@ public class Nodo {
         return siguiente;
     }
 
-    public Object obtenerValor(){
-        return valor;
+    public void setSiguiente(Nodo siguiente){
+        this.siguiente = siguiente;
+    }
+
+
+    public String toString(){
+        return this.valor.toString();
     }
 }
