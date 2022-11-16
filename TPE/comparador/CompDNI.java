@@ -7,7 +7,7 @@ public class CompDNI extends Compare{
 	public int compare(Object o1, Object o2) {
 		Alumno  a = (Alumno)o1;
 		Alumno b  = (Alumno)o2;
-		return a.getDni() - (b.getDni());
+		return a.getDni() - b.getDni();
 	}
 	
 }

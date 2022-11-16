@@ -14,15 +14,15 @@ public class Main {
 		Comparator <Object> compNombre = new CompNombre();	
         Comparator <Object> compDNI = new CompDNI();	
         Comparator <Object> CompApellido = new CompApellido();	
-        Comparator <Object> comparatorCompuesto = new CompCompuesto(compNombre,compDNI);
+        Comparator <Object> comparatorCompuesto = new CompCompuesto(compNombre,CompApellido);
 
         Comparator <Object> comparatorCompuesto2 = new CompCompuesto(compDNI,comparatorCompuesto);
 
-		ListaEnlazada listaString = new ListaEnlazada( comparatorCompuesto, 5);	
+		ListaEnlazada listaString = new ListaEnlazada( comparatorCompuesto2, 5);	
 	//	listaString.setSize(5);
 
-        Alumno a1 = new Alumno("Alexx", "Farias", 1222222, 234234234);
-        Alumno a2 = new Alumno("Alexx", "Farias", 1111122, 234234234);
+        Alumno a1 = new Alumno("Blex", "Ga", 1221, 234234234);
+        Alumno a2 = new Alumno("Alex", "Farias", 1221, 234234234);
 
 
 		System.out.println("Esta vacía " + listaString.isEmpty());		

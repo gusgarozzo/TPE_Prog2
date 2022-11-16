@@ -18,8 +18,11 @@ public class CompCompuesto extends Compare {
         Alumno a = (Alumno)o1;
         Alumno b = (Alumno)o2;
 	    int	resultado = comp1.compare(a, b);
-			if(resultado == 0);
+        System.out.println(resultado);	
+		System.out.println(resultado == 0);	
+			if(resultado == 0)
 				resultado = comp2.compare(a, b);
+                System.out.println("2 " + resultado);	
 			return resultado;
 	}
     
