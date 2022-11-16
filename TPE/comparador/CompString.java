@@ -1,9 +1,7 @@
 package TPE.comparador;
-import java.util.Comparator;
 
 import TPE.Nodo;
-
-public class CompString implements Comparator<Object>{
+public class CompString extends Compare{
     
     public int compare(Object a,Object b) {
     	String aux = (String)((Nodo)a).obtenerValor();
