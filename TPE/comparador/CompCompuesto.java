@@ -1,10 +1,8 @@
 package TPE.comparador;
 
 import java.util.Comparator;
-
 import TPE.Alumno;
-
-public class CompCompuesto implements Comparator<Object> {
+public class CompCompuesto extends Compare {
     
 	Comparator<Object> comp1;
 	Comparator<Object> comp2;

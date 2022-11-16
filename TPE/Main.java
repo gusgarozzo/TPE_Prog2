@@ -18,7 +18,7 @@ public class Main {
 
         Comparator <Object> comparatorCompuesto2 = new CompCompuesto(compDNI,comparatorCompuesto);
 
-		ListaEnlazada listaString = new ListaEnlazada( comparatorCompuesto, 2);	
+		ListaEnlazada listaString = new ListaEnlazada( comparatorCompuesto);	
 
         Alumno a1 = new Alumno("Alexx", "Farias", 122222, 234234234);
         Alumno a2 = new Alumno("Blexx", "Farias", 1111122, 234234234);

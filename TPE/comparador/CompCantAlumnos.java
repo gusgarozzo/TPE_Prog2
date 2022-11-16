@@ -1,9 +1,7 @@
 package TPE.comparador;
 
-import java.util.Comparator;
-
 import TPE.Alumno;
-public class CompCantAlumnos implements Comparator<Object>{
+public class CompCantAlumnos extends Compare{
     
     
 	@Override

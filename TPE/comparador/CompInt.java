@@ -1,8 +1,5 @@
 package TPE.comparador;
-
-import java.util.Comparator;
-
-public class CompInt implements Comparator<Object>{
+public class CompInt extends Compare{
     
     public int compare(Object a,Object b) {
     	Integer aux = (Integer)a;

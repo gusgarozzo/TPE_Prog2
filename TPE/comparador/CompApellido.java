@@ -1,10 +1,7 @@
 package TPE.comparador;
 
-import java.util.Comparator;
-
 import TPE.Alumno;
-
-public class CompApellido implements  Comparator<Object>{
+public class CompApellido extends Compare{
 
     @Override
     public int compare(Object o1, Object o2) {
