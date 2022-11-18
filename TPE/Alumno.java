@@ -54,4 +54,13 @@ public class Alumno extends ElementoAbstracto{
         return getNombre() +' ' + getApellido() + " DNI "+ getDni();
     }
 
+	 
+    public boolean equals(Object buscado) {
+		if (this.getNombre() ==  ((ElementoAbstracto) buscado).getNombre()){
+            return true;
+        }else{
+            return false;
+        }
+	}
+
 }

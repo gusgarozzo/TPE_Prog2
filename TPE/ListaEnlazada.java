@@ -8,21 +8,21 @@ public class ListaEnlazada implements Iterable<Object>{
     private int size;
     private Comparator<Object> criterio;
 
-    public ListaEnlazada( Comparator<Object> criterio, int size) {
+    public ListaEnlazada( Comparator<Object> criterio) {
         this.cabeza = null;
-        this.size = size;
+        this.size = 0;
         this.criterio = criterio;
     }
 
     
     public void agregar(Object o){
         Nodo nodo = new Nodo(o);
-        if(this.cabeza == null){
+        if(this.cabeza == null){    
             this.cabeza =  nodo;
         }else{
             Nodo aux = this.cabeza;
             Nodo  ant = null;
-            while (aux != null && criterio.compare(aux.obtenerValor(), nodo.obtenerValor()) < 0){
+            while (aux != null && criterio.compare(aux.obtenerValor(), nodo.obtenerValor()) < 0 ){
                 ant = aux;
                 aux = aux.obtenerSiguiente();
                 
@@ -61,7 +61,7 @@ public class ListaEnlazada implements Iterable<Object>{
         else{
             int cont = 0;
             Nodo aux = cabeza;
-            while (cont < index-1){
+            while (cont < index){
                 aux = aux.obtenerSiguiente();
                 cont++;
             }
@@ -70,29 +70,13 @@ public class ListaEnlazada implements Iterable<Object>{
         size--;
     }
 
-    public void eliminarOcurrencias(Object o){
-        if (this.isEmpty()){
-            return;
-        }
-        else{
-            Nodo aux = this.cabeza;
-    
-
-            while (aux != null){
-                while(aux.obtenerSiguiente() != null){
-                    if(aux.obtenerValor() == o){
-                        aux.setSiguiente(aux.obtenerSiguiente().obtenerSiguiente());
-                    }else{
-                        aux = aux.obtenerSiguiente();
-                    }
-                }
-                aux = aux.obtenerSiguiente();
-            }
-        }
-    }
+ 
+       
+        
+        
 
     public int getSize() {
-        return this.size;
+        return this.size+1;
     }
 
     public boolean isEmpty(){
@@ -103,7 +87,7 @@ public class ListaEnlazada implements Iterable<Object>{
     }
 
     public boolean verificar(int index){
-        return (this.isEmpty() || index < 0 || index >= this.getSize() );
+        return (this.isEmpty() || index < 0 || index > this.getSize() );
     }
 
     public Nodo obtenerNodo (int index){
@@ -119,6 +103,74 @@ public class ListaEnlazada implements Iterable<Object>{
             }
             return buscado;
         }
+    }
+
+    public int buscarPos(Object o){
+        Nodo actual = this.cabeza;		
+        int pos = 0;
+        Nodo buscado = new Nodo(o);
+        while(pos < this.size+1){
+            boolean i = actual.equals(o);
+            if (actual.equals(buscado)){	
+               
+                return pos;
+            }else{
+                actual = actual.obtenerSiguiente();
+                pos++;
+            }
+        }	
+        return pos;
+    }
+
+    public int cantidadRepetidos(Object o){
+        Nodo p = cabeza;
+        int cant = 0;
+        while(p!=null) {
+            if (p.obtenerValor() == o){
+                cant++;
+            }else{
+            }
+            p =  p.obtenerSiguiente();
+        }
+return cant;
+    }
+
+    public void eliminarTodasLasOcurrencias(Object obj) {
+		if(this.isEmpty()) {
+			return;
+		}
+		else {
+			Nodo p = cabeza;;
+			   
+			    while(p!=null) {
+			        while(p.obtenerSiguiente() != null) {
+			            if(p.obtenerValor() == obj) {
+			            	p.setSiguiente(p.obtenerSiguiente().obtenerSiguiente()); //el siguente de p es el 3ro
+			              } else {
+			                p = p.obtenerSiguiente();
+			            }
+			        }
+			        p = p.obtenerSiguiente(); //ahora p es el segundo
+			    }
+			}
+	}
+    
+
+    public Nodo buscarNodo (Object o){
+        Nodo actual = this.cabeza;		
+        int cont = 0;
+        Nodo buscado = new Nodo(o);
+        while(cont < this.size+1){
+            if (actual.equals(buscado)){	
+                System.out.println("Elemento encontrado en la pos "+ cont);		
+            return buscado;
+            }else{
+                actual = actual.obtenerSiguiente();
+            }
+            cont++;
+        }
+        System.out.println("No se encontro el elemento ");		
+        return buscado;
     }
 
     public void setSize(int size){

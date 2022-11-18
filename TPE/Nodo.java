@@ -33,4 +33,14 @@ public class Nodo {
     public String toString(){
         return this.valor.toString();
     }
+
+    
+    public boolean equals(Nodo buscado) {
+        if (this.obtenerValor() == buscado.obtenerValor()){
+            return true;
+        }else{
+            return false;
+        }
+       
+    }
 }
