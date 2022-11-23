@@ -36,7 +36,7 @@ public class Nodo {
 
     
     public boolean equals(Nodo buscado) {
-        if (this.obtenerValor() == buscado.obtenerValor()){
+        if (this.obtenerValor().equals(buscado.obtenerValor())){
             return true;
         }else{
             return false;

@@ -30,40 +30,45 @@ public class Main {
 		
 
 		System.out.println("Esta vacía " + listaString.isEmpty());		
-        listaString.agregar(a2);
+        listaString.agregar(a1);
+		listaString.agregar(a2);
 		listaString.agregar(a3);
 		listaString.agregar(a4);
 		listaString.agregar(a5);
-		listaString.agregar(a1);
-		listaString.agregar(a1);
-		listaString.agregar(a4);
 
 		
 	
 		
-		System.out.println("Esta vacía " + listaString.getSize()	);	
+//		System.out.println("Esta vacía " + listaString.getSize()	);	
 		//System.out.println("Obtener la posición de la primera ocurrencia de un elemento dado. " + listaString.obtenerNodo(a5));	
 	
 	
 		
 		
-		for (int i = 0; i < listaString.getSize();i++) {
+	//	for (int i = 0; i < listaString.getSize();i++) {
 
-		System.out.println("Elemento en pos " + i + " "+ listaString.obtenerNodo(i).obtenerValor().toString());
+		System.out.println("Elemento en pos 0 "  + " "+ listaString.obtenerNodo(0).obtenerValor().toString());
+		System.out.println("Elemento en pos 1 "  + " "+ listaString.obtenerNodo(1).obtenerValor().toString());
+		System.out.println("Elemento en pos 2 "  + " "+ listaString.obtenerNodo(2).obtenerValor().toString());
+		System.out.println("Elemento en pos 3 "  + " "+ listaString.obtenerNodo(3).obtenerValor().toString());
+		System.out.println("Elemento en pos 4 "  + " "+ listaString.obtenerNodo(4).obtenerValor().toString());
 			
-		}
 		
-		System.out.println(listaString.buscarNodo(a4));
+		
+		System.out.println(listaString.buscarNodo(a3));
 
 		System.out.println("-------------------------------------------------------------------------------");
 
-		listaString.eliminarTodasLasOcurrencias(a4);
+		listaString.eliminar(0);
 
-		for (int i = 0; i < listaString.getSize();i++) {
+	//	for (int i = 0; i < listaString.getSize();i++) {
 
-			System.out.println("Elemento en pos " + i + " "+ listaString.obtenerNodo(i).obtenerValor().toString());
 				
-			}
+			
+			System.out.println("Elemento en pos 0 "  + " "+ listaString.obtenerNodo(0).obtenerValor().toString());
+			System.out.println("Elemento en pos 1 "  + " "+ listaString.obtenerNodo(1).obtenerValor().toString());
+			System.out.println("Elemento en pos 2 "  + " "+ listaString.obtenerNodo(2).obtenerValor().toString());
+		
 
 
 
