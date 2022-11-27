@@ -1,9 +1,5 @@
 
-
-
-
 public class ComparadorDescendente extends Comparador {
-
     @Override
     public boolean add(Nodo nodo, Nodo nuevo) {
         int resultado = nodo.getObjetoAcomparar().compareTo(nuevo.getObjetoAcomparar());

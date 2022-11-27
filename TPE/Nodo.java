@@ -1,5 +1,4 @@
 
-
 public class Nodo  {
     private Comparable comparar;
     private Nodo anterior;
@@ -9,8 +8,6 @@ public class Nodo  {
         this.comparar = objComparable;
     }
 
-     
-    //Funcionalidades
     public void invertirSiguienteAnterior() {
         Nodo aux = this.siguiente;
         this.setSiguienteNodo(this.anterior);
@@ -75,9 +72,6 @@ public class Nodo  {
         return -1;
     }
 
-
-
-
     public Comparable getObjetoAcomparar() {
         return this.comparar;
     }
@@ -100,7 +94,6 @@ public class Nodo  {
 
     @Override
     public boolean equals(Object o) {
-
         try {
             Nodo otroNodo = (Nodo) o;
             return this.getObjetoAcomparar().equals(otroNodo.getObjetoAcomparar());
@@ -114,8 +107,4 @@ public class Nodo  {
     public String toString() {
         return this.comparar + "";
     }
-
-  
-   
-
 }

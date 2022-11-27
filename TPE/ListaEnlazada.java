@@ -1,6 +1,4 @@
-
 import java.util.Iterator;
-
 public class ListaEnlazada implements Iterable<Nodo> {
     
     private Nodo cabeza;
@@ -12,12 +10,6 @@ public class ListaEnlazada implements Iterable<Nodo> {
     public ListaEnlazada(Nodo cabeza, Comparador comportamiento) {
         this.cabeza = cabeza;
         this.comportamiento = comportamiento;
-    }
-
-    //Funcionalidades
-    @Override
-    public Iterator<Nodo> iterator() {
-        return new IteradorNodos();
     }
 
     public void eliminarNodoElement(Comparable objComparable) {
@@ -135,6 +127,11 @@ public class ListaEnlazada implements Iterable<Nodo> {
 
     public void setNodoRaiz(Nodo cabeza) {
         this.cabeza = cabeza;
+    }
+
+    @Override
+    public Iterator<Nodo> iterator() {
+        return new IteradorNodos();
     }
     private class IteradorNodos implements Iterator<Nodo> {
 

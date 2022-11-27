@@ -1,4 +1,3 @@
-
 import java.util.ArrayList;
 public class Alumno extends ElementoAbstracto implements Comparable<Alumno>{
 	private String apellido;
@@ -57,7 +56,6 @@ public class Alumno extends ElementoAbstracto implements Comparable<Alumno>{
 	 
     @Override
     public boolean equals(Object o) {
-
         try {
             Alumno otroAlumno = (Alumno) o;
             return this.getNombre().equalsIgnoreCase(otroAlumno.getNombre()) && this.getApellido().equalsIgnoreCase(otroAlumno.getApellido()) && this.getDni().equalsIgnoreCase(otroAlumno.getDni());
@@ -78,5 +76,4 @@ public class Alumno extends ElementoAbstracto implements Comparable<Alumno>{
         }
         return resultado;
     }
-
 }

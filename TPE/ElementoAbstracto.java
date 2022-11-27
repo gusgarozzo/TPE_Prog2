@@ -1,5 +1,3 @@
-
-
 public abstract class ElementoAbstracto {
 	private String nombre;
 	

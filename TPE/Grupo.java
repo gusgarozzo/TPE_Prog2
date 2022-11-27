@@ -1,8 +1,4 @@
-
-
-
 import java.util.ArrayList;
-
 public class Grupo extends ElementoAbstracto implements Comparable<Grupo>{
 	private ArrayList<ElementoAbstracto> elementos;
 
@@ -27,7 +23,6 @@ public class Grupo extends ElementoAbstracto implements Comparable<Grupo>{
 
 	@Override
     public boolean equals(Object o) {
-
         try {
             Grupo otroGrupo = (Grupo) o;
             return this.getNombre().equalsIgnoreCase(otroGrupo.getNombre());
