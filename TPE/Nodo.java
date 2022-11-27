@@ -1,6 +1,6 @@
 package TPE;
 
-public class Nodo {
+public class Nodo  {
     private Object valor;
     private Nodo siguiente;
 
@@ -31,16 +31,9 @@ public class Nodo {
 
 
     public String toString(){
-        return this.valor.toString();
+        return this.obtenerValor().toString();
     }
 
-    
-    public boolean equals(Nodo buscado) {
-        if (this.obtenerValor().equals(buscado.obtenerValor())){
-            return true;
-        }else{
-            return false;
-        }
-       
-    }
+   
+
 }

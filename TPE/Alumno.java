@@ -56,7 +56,7 @@ public class Alumno extends ElementoAbstracto{
 
 	 
     public boolean equals(Object buscado) {
-		if (this.getNombre() ==  ((ElementoAbstracto) buscado).getNombre()){
+		if (this.getNombre().equals(buscado)){
             return true;
         }else{
             return false;

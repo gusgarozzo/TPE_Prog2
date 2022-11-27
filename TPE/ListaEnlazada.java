@@ -1,25 +1,26 @@
 package TPE;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
 
 public class ListaEnlazada implements Iterable<Object>{
-    private Nodo cabeza;
+    protected Nodo cabeza;
     private Comparator<Object> criterio;
 
-    public ListaEnlazada( Comparator<Object> criterio) {
+    public ListaEnlazada( Comparator<Object> comparatorCompuesto2) {
         this.cabeza = null;
-        this.criterio = criterio;
+        this.criterio = comparatorCompuesto2;
     }
 
 
     public void agregar(Object o){
-        TPE.Nodo nodo = new Nodo(o);
+        Nodo nodo = new Nodo(o);
         if(this.cabeza == null){    
             this.cabeza =  nodo;
         }else{
-            TPE.Nodo aux = this.cabeza;
-            TPE.Nodo ant = null;
+            Nodo aux = this.cabeza;
+            Nodo ant = null;
             while (aux != null && criterio.compare(aux.obtenerValor(), nodo.obtenerValor()) < 0 ){
                 ant = aux;
                 aux = aux.obtenerSiguiente();
@@ -52,7 +53,7 @@ public class ListaEnlazada implements Iterable<Object>{
             }
             else{
                 int cont = 0;
-                TPE.Nodo aux = cabeza;
+                Nodo aux = cabeza;
                 while (cont < index){
                     aux = aux.obtenerSiguiente();
                     cont++;
@@ -73,14 +74,14 @@ public class ListaEnlazada implements Iterable<Object>{
         return (this.isEmpty() || index < 0);
     }
 
-    public TPE.Nodo obtenerNodo (int index){
+    public Nodo obtenerNodo (int index){
         if (verificar(index)){
             return null;
         }
         else{
             int cont = 0;
-            TPE.Nodo buscado = this.cabeza;
-            while(cont < index){
+            Nodo buscado = this.cabeza;
+            while(cont < index ){
                 buscado = buscado.obtenerSiguiente();
                 cont++;
             }
@@ -89,7 +90,7 @@ public class ListaEnlazada implements Iterable<Object>{
     }
 
     public int buscarPos(Object o){
-        TPE.Nodo actual = this.cabeza;
+        Nodo actual = this.cabeza;
         Integer pos = 0;
         while(pos != null){
             if (actual.obtenerValor() == o){
@@ -103,7 +104,7 @@ public class ListaEnlazada implements Iterable<Object>{
     }
 
     public int cantidadRepetidos(Object o){
-        TPE.Nodo p = cabeza;
+        Nodo p = cabeza;
         int cant = 0;
         while(p!=null) {
             if (p.obtenerValor() == o){
@@ -117,10 +118,10 @@ return cant;
 
     public void eliminarTodasLasOcurrencias(Object obj) {
 		if(!this.isEmpty()) {
-            TPE.Nodo p = cabeza;
+            Nodo p = cabeza;
             while(p!=null) {
                 while(p.obtenerSiguiente() != null) {
-                    if(p.obtenerValor() == obj) {
+                    if(p.obtenerValor().equals(obj)) {
                         if (p.obtenerValor() == this.cabeza){
                             this.eliminarCabeza();
                         }else{
@@ -136,13 +137,16 @@ return cant;
 		}
 	}
     
+    public String toString(){
+        return this.cabeza.obtenerValor().toString();
+    }
 
     public Nodo buscarNodo (Object o){
-        TPE.Nodo actual = this.cabeza;
+        Nodo actual = this.cabeza;
         Integer cont = 0;
-        TPE.Nodo buscado = new Nodo(o);
+        Nodo buscado = new Nodo(o);
         while(cont != null){
-            if (actual.equals(buscado)){
+            if (actual.equals(buscado)){   //actual.obtenerValor == buscado.obtenerValor
                 System.out.println("Elemento encontrado en la pos "+ cont);		
             return buscado;
             }else{
@@ -155,23 +159,36 @@ return cant;
     }
 
 
+
+
+
     @Override
     public Iterator<Object> iterator() {
         return new IteratorNodos();
     }
 
     private class IteratorNodos  implements Iterator<Object>{
-    		private int siguiente; //Indica el siguiente elemento 
+            private Object siguiente = cabeza; //Indica el siguiente elemento 
         @Override
         public boolean hasNext() {
-            return obtenerNodo(siguiente)!=null;
+         
+            return ((Nodo) siguiente).obtenerSiguiente() != null;
+        
         }
 
         @Override
         public Object next() {
-            Object obj = obtenerNodo(siguiente).obtenerValor();
-            siguiente++;
-            return obj;
+            int pos = 0;
+            ArrayList resultado = new ArrayList<>();
+            while(hasNext()){
+
+                Object obj = obtenerNodo(pos).obtenerValor();
+                resultado.add(obj);
+                        obj = obtenerNodo(pos).obtenerValor();
+                        siguiente = obj;
+                        pos++;
+            }
+                    return obj;
         }
     }
 

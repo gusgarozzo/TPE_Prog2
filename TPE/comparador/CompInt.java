@@ -1,9 +1,16 @@
 package TPE.comparador;
-public class CompInt extends Compare{
+
+import java.util.Comparator;
+
+import TPE.Nodo;
+
+public class CompInt implements Comparator<Object>{
     
-    public int compare(Object a,Object b) {
-    	Integer aux = (Integer)a;
-    	Integer baux = (Integer)b;
-    	return aux.compareTo(baux);    	
+	@Override
+    public int compare(Object n1,Object n2) {
+    	Integer a = (Integer) ((Nodo) n1).obtenerValor();
+    	Integer b = (Integer) ((Nodo) n2).obtenerValor();
+    	return a.compareTo(b);    	
     }
+
 }

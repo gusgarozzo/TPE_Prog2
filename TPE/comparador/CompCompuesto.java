@@ -2,18 +2,18 @@ package TPE.comparador;
 
 import java.util.Comparator;
 import TPE.Alumno;
-public class CompCompuesto extends Compare {
+public class CompCompuesto implements Comparator<Alumno>{
     
-	Comparator<Object> comp1;
-	Comparator<Object> comp2;
+	Comparator<Alumno> comp1;
+	Comparator<Alumno> comp2;
 	
-	public CompCompuesto(Comparator<Object> comp1, Comparator<Object> comp2){
+	public CompCompuesto(Comparator<Alumno> comp1, Comparator<Alumno> comp2){
 		this.comp1 = comp1;
 		this.comp2 = comp2;
 	}
 
 	@Override
-	public int compare(Object o1, Object o2) {
+	public int compare(Alumno o1, Alumno o2) {
 	
         Alumno a = (Alumno)o1;
         Alumno b = (Alumno)o2;

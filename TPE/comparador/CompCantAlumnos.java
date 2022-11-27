@@ -1,14 +1,13 @@
 package TPE.comparador;
 
+import java.util.Comparator;
+
 import TPE.Alumno;
-public class CompCantAlumnos extends Compare{
-    
+public class CompCantAlumnos implements Comparator<Alumno>{
     
 	@Override
-	public int compare(Object o1, Object o2) {
-		Alumno a = (Alumno)o1;
-		Alumno b = (Alumno)o2;
-		return a.getCantidadAlumnos() - (b.getCantidadAlumnos());
+	public int compare(Alumno a1, Alumno a2) {
+		return a1.getCantidadAlumnos() - (a2.getCantidadAlumnos());
 	}
 }
 
