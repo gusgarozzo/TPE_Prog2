@@ -4,14 +4,14 @@ import java.util.Iterator;
 public class ListaEnlazada implements Iterable<Nodo> {
     
     private Nodo nodo_raiz;
-    private Comparador comportamiento_add;
+    private Comparador comportamiento;
 
-    public ListaEnlazada(Comparador comportamiento_add) {
-        this.comportamiento_add = comportamiento_add;
+    public ListaEnlazada(Comparador comportamiento) {
+        this.comportamiento = comportamiento;
     }
-    public ListaEnlazada(Nodo nodo_raiz, Comparador comportamiento_add) {
+    public ListaEnlazada(Nodo nodo_raiz, Comparador comportamiento) {
         this.nodo_raiz = nodo_raiz;
-        this.comportamiento_add = comportamiento_add;
+        this.comportamiento = comportamiento;
     }
 
     //Funcionalidades
@@ -54,7 +54,7 @@ public class ListaEnlazada implements Iterable<Nodo> {
     public void addNodo(Comparable objeto_comparable) {
         Nodo nodo_nuevo = new Nodo(objeto_comparable);
         if (this.nodo_raiz != null) { 
-            boolean seAgregaComoSiguiente = this.comportamiento_add.add(this.nodo_raiz, nodo_nuevo); 
+            boolean seAgregaComoSiguiente = this.comportamiento.add(this.nodo_raiz, nodo_nuevo); 
             if (!seAgregaComoSiguiente) {
                 this.setNodoRaiz(this.nodo_raiz.getAnteriorNodo());
             }
@@ -108,12 +108,11 @@ public class ListaEnlazada implements Iterable<Nodo> {
     }
 
     public Comparador getComportamientoAdd() {
-        return this.comportamiento_add;
+        return this.comportamiento;
     }
 
-    //Setters
     public void setComportamientoAdd(Comparador comportamiento_add) { 
-        this.comportamiento_add = comportamiento_add;
+        this.comportamiento = comportamiento_add;
         this.invertirLista();
     }
 
