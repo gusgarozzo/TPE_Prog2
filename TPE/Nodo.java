@@ -5,8 +5,8 @@ public class Nodo  {
     private Nodo anterior;
     private Nodo siguiente;
 
-    public Nodo(Comparable objeto_comparable) {
-        this.comparar = objeto_comparable;
+    public Nodo(Comparable objComparable) {
+        this.comparar = objComparable;
     }
 
      
@@ -17,17 +17,17 @@ public class Nodo  {
         this.setAnteriorNodo(aux);
     }
 
-    public void removeNodoPorValor(Comparable objeto_comparable) {
-        if (this.comparar.compareTo(objeto_comparable) == 0) { 
+    public void removeNodoPorValor(Comparable objComparable) {
+        if (this.comparar.compareTo(objComparable) == 0) { 
             if (this.siguiente != null) { 
                 this.anterior.setSiguienteNodo(this.siguiente); 
-                this.anterior.removeNodoPorValor(objeto_comparable); 
+                this.anterior.removeNodoPorValor(objComparable); 
                 this.siguiente.setAnteriorNodo(this.anterior); 
             } else {
                 this.anterior.setSiguienteNodo(null); 
             }
         } else if (this.siguiente != null) {
-            this.siguiente.removeNodoPorValor(objeto_comparable);
+            this.siguiente.removeNodoPorValor(objComparable);
         }
     }
 
@@ -64,13 +64,13 @@ public class Nodo  {
         return contador;
     }
 
-    public int getPosicionNodo(Comparable objeto_comparable, int posicion_nodo) {
-        if (this.comparar.compareTo(objeto_comparable) == 0) {
+    public int getPosicionNodo(Comparable objComparable, int posicion_nodo) {
+        if (this.comparar.compareTo(objComparable) == 0) {
             return posicion_nodo;
         }
         posicion_nodo++;
         if (this.siguiente != null) {
-            return this.siguiente.getPosicionNodo(objeto_comparable, posicion_nodo);
+            return this.siguiente.getPosicionNodo(objComparable, posicion_nodo);
         }
         return -1;
     }
@@ -90,12 +90,12 @@ public class Nodo  {
         return this.anterior;
     }
 
-     public void setSiguienteNodo(Nodo siguiente_nodo) {
-        this.siguiente = siguiente_nodo;
+     public void setSiguienteNodo(Nodo siguienteNodo) {
+        this.siguiente = siguienteNodo;
     }
 
-    public void setAnteriorNodo(Nodo anterior_nodo) {
-        this.anterior = anterior_nodo;
+    public void setAnteriorNodo(Nodo anteriorNodo) {
+        this.anterior = anteriorNodo;
     }
 
     @Override

@@ -2,14 +2,16 @@
 
 public class ComparadorAscendente extends Comparador{
 
+    // si el nodo nuevo se setea como anterior al nodo actual devuelve false, sino true
+
     @Override
     public boolean add(Nodo nodo, Nodo nuevo) {
         int resultado = nodo.getObjetoAcomparar().compareTo(nuevo.getObjetoAcomparar());
-        if (resultado < 0 || resultado == 0) {
+        if (resultado <= 0 ) {
             Nodo siguiente = nodo.getSiguienteNodo();
             if (siguiente != null) {
                 int resultado2 = siguiente.getObjetoAcomparar().compareTo(nuevo.getObjetoAcomparar());
-                if (resultado2 < 0 || resultado == 0) { 
+                if (resultado2 <= 0) { 
                     this.add(siguiente, nuevo);
                     return true;
                 }

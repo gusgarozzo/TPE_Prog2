@@ -3,14 +3,14 @@ import java.util.Iterator;
 
 public class ListaEnlazada implements Iterable<Nodo> {
     
-    private Nodo nodo_raiz;
+    private Nodo cabeza;
     private Comparador comportamiento;
 
     public ListaEnlazada(Comparador comportamiento) {
         this.comportamiento = comportamiento;
     }
-    public ListaEnlazada(Nodo nodo_raiz, Comparador comportamiento) {
-        this.nodo_raiz = nodo_raiz;
+    public ListaEnlazada(Nodo cabeza, Comparador comportamiento) {
+        this.cabeza = cabeza;
         this.comportamiento = comportamiento;
     }
 
@@ -20,43 +20,43 @@ public class ListaEnlazada implements Iterable<Nodo> {
         return new IteradorNodos();
     }
 
-    public void removeNodoPorValor(Comparable objeto_comparable) {
-        Nodo siguiente_nodo_raiz = this.nodo_raiz.getSiguienteNodo();
-        if (this.nodo_raiz.getObjetoAcomparar().compareTo(objeto_comparable) == 0) { 
-            if (siguiente_nodo_raiz != null) {
-                this.setNodoRaiz(siguiente_nodo_raiz);
-                this.nodo_raiz.setAnteriorNodo(null);
-                this.removeNodoPorValor(objeto_comparable);
+    public void removeNodoPorValor(Comparable objComparable) {
+        Nodo siguiente_cabeza = this.cabeza.getSiguienteNodo();
+        if (this.cabeza.getObjetoAcomparar().compareTo(objComparable) == 0) { 
+            if (siguiente_cabeza != null) {
+                this.setNodoRaiz(siguiente_cabeza);
+                this.cabeza.setAnteriorNodo(null);
+                this.removeNodoPorValor(objComparable);
             } else { 
                 this.setNodoRaiz(null);
             }
-        } else if (siguiente_nodo_raiz != null) { 
-            siguiente_nodo_raiz.removeNodoPorValor(objeto_comparable);
+        } else if (siguiente_cabeza != null) { 
+            siguiente_cabeza.removeNodoPorValor(objComparable);
         }
     }
 
     public void removeNodoPorPosicion(int posicion) {
         int posicion_nodo = 0;
-        Nodo siguiente_nodo_raiz = this.nodo_raiz.getSiguienteNodo();
+        Nodo siguiente_cabeza = this.cabeza.getSiguienteNodo();
         if (posicion_nodo == posicion) {
-            if (siguiente_nodo_raiz != null) {
-                this.setNodoRaiz(siguiente_nodo_raiz); 
-                this.nodo_raiz.setAnteriorNodo(null);
+            if (siguiente_cabeza != null) {
+                this.setNodoRaiz(siguiente_cabeza); 
+                this.cabeza.setAnteriorNodo(null);
             } else { 
                 this.setNodoRaiz(null);
             }
-        } else if (siguiente_nodo_raiz != null) { 
+        } else if (siguiente_cabeza != null) { 
             posicion_nodo++;
-            siguiente_nodo_raiz.removeNodoPorPosicion(posicion_nodo, posicion); 
+            siguiente_cabeza.removeNodoPorPosicion(posicion_nodo, posicion); 
         }
     }
 
-    public void addNodo(Comparable objeto_comparable) {
-        Nodo nodo_nuevo = new Nodo(objeto_comparable);
-        if (this.nodo_raiz != null) { 
-            boolean seAgregaComoSiguiente = this.comportamiento.add(this.nodo_raiz, nodo_nuevo); 
+    public void addNodo(Comparable objComparable) {
+        Nodo nodo_nuevo = new Nodo(objComparable);
+        if (this.cabeza != null) { 
+            boolean seAgregaComoSiguiente = this.comportamiento.add(this.cabeza, nodo_nuevo); 
             if (!seAgregaComoSiguiente) {
-                this.setNodoRaiz(this.nodo_raiz.getAnteriorNodo());
+                this.setNodoRaiz(this.cabeza.getAnteriorNodo());
             }
         } else {
             this.setNodoRaiz(nodo_nuevo);
@@ -66,11 +66,11 @@ public class ListaEnlazada implements Iterable<Nodo> {
     //Getters
     public Nodo getNodoPorPosicion(int posicion_param) {
         int posicion = 0;
-        if (this.getPosicionNodo(this.nodo_raiz.getObjetoAcomparar()) == posicion_param) { 
-            return this.nodo_raiz;
+        if (this.getPosicionNodo(this.cabeza.getObjetoAcomparar()) == posicion_param) { 
+            return this.cabeza;
         }
         posicion++;
-        Nodo siguiente_nodo = this.nodo_raiz.getSiguienteNodo();
+        Nodo siguiente_nodo = this.cabeza.getSiguienteNodo();
         if (siguiente_nodo != null) {
             return siguiente_nodo.getNodoPorPosicion(posicion_param, posicion);
         }
@@ -79,9 +79,9 @@ public class ListaEnlazada implements Iterable<Nodo> {
 
     public int getCantidadNodos() {
         int contador = 0;
-        if (this.nodo_raiz != null) {
+        if (this.cabeza != null) {
             contador++;
-            Nodo siguiente_nodo = this.nodo_raiz.getSiguienteNodo();
+            Nodo siguiente_nodo = this.cabeza.getSiguienteNodo();
             if (siguiente_nodo != null) {
                 contador += siguiente_nodo.getCantidadNodos();
             }
@@ -89,22 +89,22 @@ public class ListaEnlazada implements Iterable<Nodo> {
         return contador;
     }
 
-    public int getPosicionNodo(Comparable objeto_comparable) {
+    public int getPosicionNodo(Comparable objComparable) {
 
         int posicion_nodo = 0; 
-        if (this.nodo_raiz.getObjetoAcomparar().compareTo(objeto_comparable) == 0) {
+        if (this.cabeza.getObjetoAcomparar().compareTo(objComparable) == 0) {
             return posicion_nodo;
         }
         posicion_nodo++;
-        Nodo siguiente_nodo = this.nodo_raiz.getSiguienteNodo();
+        Nodo siguiente_nodo = this.cabeza.getSiguienteNodo();
         if (siguiente_nodo != null) { 
-            return siguiente_nodo.getPosicionNodo(objeto_comparable, posicion_nodo);
+            return siguiente_nodo.getPosicionNodo(objComparable, posicion_nodo);
         }
         return -1;
     }
 
     public Nodo getNodoRaiz() {
-        return this.nodo_raiz;
+        return this.cabeza;
     }
 
     public Comparador getComportamientoAdd() {
@@ -133,8 +133,8 @@ public class ListaEnlazada implements Iterable<Nodo> {
         }
     }
 
-    public void setNodoRaiz(Nodo nodo_raiz) {
-        this.nodo_raiz = nodo_raiz;
+    public void setNodoRaiz(Nodo cabeza) {
+        this.cabeza = cabeza;
     }
     private class IteradorNodos implements Iterator<Nodo> {
 
