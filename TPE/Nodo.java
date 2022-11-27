@@ -1,10 +1,10 @@
 
 public class Nodo  {
-    private Comparable comparar;
+    private Comparable<Object> comparar;
     private Nodo anterior;
     private Nodo siguiente;
 
-    public Nodo(Comparable objComparable) {
+    public Nodo(Comparable<Object> objComparable) {
         this.comparar = objComparable;
     }
 
@@ -14,7 +14,7 @@ public class Nodo  {
         this.setAnteriorNodo(aux);
     }
 
-    public void eliminarNodoElement(Comparable objComparable) {
+    public void eliminarNodoElement(Comparable<Object> objComparable) {
         if (this.comparar.compareTo(objComparable) == 0) { 
             if (this.siguiente != null) { 
                 this.anterior.setSiguienteNodo(this.siguiente); 
@@ -61,7 +61,7 @@ public class Nodo  {
         return contador;
     }
 
-    public int getPosicionNodo(Comparable objComparable, int posicion_nodo) {
+    public int getPosicionNodo(Comparable<Object> objComparable, int posicion_nodo) {
         if (this.comparar.compareTo(objComparable) == 0) {
             return posicion_nodo;
         }
@@ -72,7 +72,7 @@ public class Nodo  {
         return -1;
     }
 
-    public Comparable getObjetoAcomparar() {
+    public Comparable<Object> getObjetoAcomparar() {
         return this.comparar;
     }
 
