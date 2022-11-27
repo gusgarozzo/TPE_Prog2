@@ -1,9 +1,9 @@
-package TPE;
+
 
 
 import java.util.ArrayList;
 
-public class Grupo extends ElementoAbstracto{
+public class Grupo extends ElementoAbstracto implements Comparable<Grupo>{
 	private ArrayList<ElementoAbstracto> elementos;
 
 	public Grupo(String nombre) {
@@ -12,7 +12,9 @@ public class Grupo extends ElementoAbstracto{
 	}
 	
 	public void agregarElemento(ElementoAbstracto e){
-		this.elementos.add(e);
+		if (!this.elementos.contains(e)) {
+            this.elementos.add(e);
+        }
 	}
 
 	@Override
@@ -22,5 +24,22 @@ public class Grupo extends ElementoAbstracto{
 			cantidad += e.getCantidadAlumnos();
 		return cantidad;
 	}
+
+	@Override
+    public boolean equals(Object o) {
+
+        try {
+            Grupo otroGrupo = (Grupo) o;
+            return this.getNombre().equalsIgnoreCase(otroGrupo.getNombre());
+        }
+        catch(Exception exc) {
+            return false;
+        }
+    }
+
+	@Override
+    public int compareTo(Grupo otroGrupo) {
+        return this.getCantidadAlumnos() - otroGrupo.getCantidadAlumnos();
+    }
 
 }

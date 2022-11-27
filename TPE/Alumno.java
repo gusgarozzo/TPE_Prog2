@@ -1,15 +1,12 @@
-package TPE;
-
 
 import java.util.ArrayList;
-
-public class Alumno extends ElementoAbstracto{
+public class Alumno extends ElementoAbstracto implements Comparable<Alumno>{
 	private String apellido;
-	private int dni;
+	private String dni;
 	private int edad;
 	private ArrayList<String> intereses;
 
-	public Alumno(String nombre, String apellido, int dni, int edad) {
+	public Alumno(String nombre, String apellido, String dni, int edad) {
 		super(nombre);
 		this.apellido = apellido;
 		this.dni = dni;
@@ -17,8 +14,10 @@ public class Alumno extends ElementoAbstracto{
 		this.intereses = new ArrayList<>();
 	}
 	
-	public void agregarIntereses(String s){
-		intereses.add(s);
+	public void agregarIntereses(String interes){
+		if (!this.intereses.contains(interes)) {
+            this.intereses.add(interes);
+        }
 	}
 	
 	public String getApellido() {
@@ -29,11 +28,11 @@ public class Alumno extends ElementoAbstracto{
 		this.apellido = apellido;
 	}
 
-	public int getDni() {
-		return dni;
+	public String getDni() {
+		return this.dni;
 	}
 
-	public void setDni(int dni) {
+	public void setDni(String dni) {
 		this.dni = dni;
 	}
 
@@ -50,17 +49,34 @@ public class Alumno extends ElementoAbstracto{
 		return 1;
 	}
 
-    public String toString(){
-        return getNombre() +' ' + getApellido() + " DNI "+ getDni();
+    @Override
+    public String toString() {
+        return "Alumno nombre=" + this.getNombre() + ", apellido=" + this.apellido;
     }
 
 	 
-    public boolean equals(Object buscado) {
-		if (this.getNombre().equals(buscado)){
-            return true;
-        }else{
+    @Override
+    public boolean equals(Object o) {
+
+        try {
+            Alumno otroAlumno = (Alumno) o;
+            return this.getNombre().equalsIgnoreCase(otroAlumno.getNombre()) && this.getApellido().equalsIgnoreCase(otroAlumno.getApellido()) && this.getDni().equalsIgnoreCase(otroAlumno.getDni());
+        }
+        catch(Exception exc) {
             return false;
         }
-	}
+    }
+
+	@Override
+    public int compareTo(Alumno otroAlumno) {
+        int resultado = this.getApellido().compareToIgnoreCase(otroAlumno.getApellido());
+        if (resultado == 0) {
+            resultado = this.getNombre().compareToIgnoreCase(otroAlumno.getNombre());
+        }
+        if (resultado == 0) {
+            resultado = this.getDni().compareToIgnoreCase(otroAlumno.getDni());
+        }
+        return resultado;
+    }
 
 }

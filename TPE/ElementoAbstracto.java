@@ -1,10 +1,10 @@
-package TPE;
+
 
 public abstract class ElementoAbstracto {
 	private String nombre;
 	
 	public ElementoAbstracto(String nombre){
-		this.nombre =nombre;
+		this.nombre = nombre;
 	}
 	
 	public String getNombre() {
@@ -14,6 +14,11 @@ public abstract class ElementoAbstracto {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+
+	@Override
+    public String toString() {
+        return "ElementoEstudiantil nombre=" + this.nombre;
+    }
 
 	public abstract int getCantidadAlumnos();
 }

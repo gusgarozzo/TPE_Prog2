@@ -1,195 +1,159 @@
-package TPE;
 
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Iterator;
 
-public class ListaEnlazada implements Iterable<Object>{
-    protected Nodo cabeza;
-    private Comparator<Object> criterio;
-
-    public ListaEnlazada( Comparator<Object> comparatorCompuesto2) {
-        this.cabeza = null;
-        this.criterio = comparatorCompuesto2;
-    }
-
-
-    public void agregar(Object o){
-        Nodo nodo = new Nodo(o);
-        if(this.cabeza == null){    
-            this.cabeza =  nodo;
-        }else{
-            Nodo aux = this.cabeza;
-            Nodo ant = null;
-            while (aux != null && criterio.compare(aux.obtenerValor(), nodo.obtenerValor()) < 0 ){
-                ant = aux;
-                aux = aux.obtenerSiguiente();
-                
-            }
-            if (aux == null){
-                ant.agregarNodo(nodo);
-            }else{
-                nodo.agregarNodo(aux);
-                if (aux == this.cabeza){
-                    this.cabeza = nodo;
-                }
-                else{
-                    ant.setSiguiente(nodo);
-                }
-            }
-        }
-    }
+public class ListaEnlazada implements Iterable<Nodo> {
     
-    public void eliminarCabeza(){
-        if (!isEmpty()){
-            this.cabeza = cabeza.obtenerSiguiente();
-        }
+    private Nodo nodo_raiz;
+    private Comparador comportamiento_add;
+
+    public ListaEnlazada(Comparador comportamiento_add) {
+        this.comportamiento_add = comportamiento_add;
     }
-    
-    public void eliminar(int index){
-        if (!verificar(index)){
-            if(index == 0){
-                this.eliminarCabeza();
+    public ListaEnlazada(Nodo nodo_raiz, Comparador comportamiento_add) {
+        this.nodo_raiz = nodo_raiz;
+        this.comportamiento_add = comportamiento_add;
+    }
+
+    //Funcionalidades
+    @Override
+    public Iterator<Nodo> iterator() {
+        return new IteradorNodos();
+    }
+
+    public void removeNodoPorValor(Comparable objeto_comparable) {
+        Nodo siguiente_nodo_raiz = this.nodo_raiz.getSiguienteNodo();
+        if (this.nodo_raiz.getObjetoAcomparar().compareTo(objeto_comparable) == 0) { 
+            if (siguiente_nodo_raiz != null) {
+                this.setNodoRaiz(siguiente_nodo_raiz);
+                this.nodo_raiz.setAnteriorNodo(null);
+                this.removeNodoPorValor(objeto_comparable);
+            } else { 
+                this.setNodoRaiz(null);
             }
-            else{
-                int cont = 0;
-                Nodo aux = cabeza;
-                while (cont < index){
-                    aux = aux.obtenerSiguiente();
-                    cont++;
-                }
-                aux.agregarNodo(aux.obtenerSiguiente().obtenerSiguiente());
-            }
+        } else if (siguiente_nodo_raiz != null) { 
+            siguiente_nodo_raiz.removeNodoPorValor(objeto_comparable);
         }
     }
 
-    public boolean isEmpty(){
-        if (this.cabeza == null){
-            return true;
-        }
-        return false;
-    }
-
-    public boolean verificar(int index){
-        return (this.isEmpty() || index < 0);
-    }
-
-    public Nodo obtenerNodo (int index){
-        if (verificar(index)){
-            return null;
-        }
-        else{
-            int cont = 0;
-            Nodo buscado = this.cabeza;
-            while(cont < index ){
-                buscado = buscado.obtenerSiguiente();
-                cont++;
+    public void removeNodoPorPosicion(int posicion) {
+        int posicion_nodo = 0;
+        Nodo siguiente_nodo_raiz = this.nodo_raiz.getSiguienteNodo();
+        if (posicion_nodo == posicion) {
+            if (siguiente_nodo_raiz != null) {
+                this.setNodoRaiz(siguiente_nodo_raiz); 
+                this.nodo_raiz.setAnteriorNodo(null);
+            } else { 
+                this.setNodoRaiz(null);
             }
-            return buscado;
+        } else if (siguiente_nodo_raiz != null) { 
+            posicion_nodo++;
+            siguiente_nodo_raiz.removeNodoPorPosicion(posicion_nodo, posicion); 
         }
     }
 
-    public int buscarPos(Object o){
-        Nodo actual = this.cabeza;
-        Integer pos = 0;
-        while(pos != null){
-            if (actual.obtenerValor() == o){
-                return pos;
-            }else{
-                actual = actual.obtenerSiguiente();
-                pos++;
+    public void addNodo(Comparable objeto_comparable) {
+        Nodo nodo_nuevo = new Nodo(objeto_comparable);
+        if (this.nodo_raiz != null) { 
+            boolean seAgregaComoSiguiente = this.comportamiento_add.add(this.nodo_raiz, nodo_nuevo); 
+            if (!seAgregaComoSiguiente) {
+                this.setNodoRaiz(this.nodo_raiz.getAnteriorNodo());
             }
+        } else {
+            this.setNodoRaiz(nodo_nuevo);
+        }
+    }
+
+    //Getters
+    public Nodo getNodoPorPosicion(int posicion_param) {
+        int posicion = 0;
+        if (this.getPosicionNodo(this.nodo_raiz.getObjetoAcomparar()) == posicion_param) { 
+            return this.nodo_raiz;
+        }
+        posicion++;
+        Nodo siguiente_nodo = this.nodo_raiz.getSiguienteNodo();
+        if (siguiente_nodo != null) {
+            return siguiente_nodo.getNodoPorPosicion(posicion_param, posicion);
+        }
+        return null; 
+    }
+
+    public int getCantidadNodos() {
+        int contador = 0;
+        if (this.nodo_raiz != null) {
+            contador++;
+            Nodo siguiente_nodo = this.nodo_raiz.getSiguienteNodo();
+            if (siguiente_nodo != null) {
+                contador += siguiente_nodo.getCantidadNodos();
+            }
+        }
+        return contador;
+    }
+
+    public int getPosicionNodo(Comparable objeto_comparable) {
+
+        int posicion_nodo = 0; 
+        if (this.nodo_raiz.getObjetoAcomparar().compareTo(objeto_comparable) == 0) {
+            return posicion_nodo;
+        }
+        posicion_nodo++;
+        Nodo siguiente_nodo = this.nodo_raiz.getSiguienteNodo();
+        if (siguiente_nodo != null) { 
+            return siguiente_nodo.getPosicionNodo(objeto_comparable, posicion_nodo);
         }
         return -1;
     }
 
-    public int cantidadRepetidos(Object o){
-        Nodo p = cabeza;
-        int cant = 0;
-        while(p!=null) {
-            if (p.obtenerValor() == o){
-                cant++;
-            }else{
-            }
-            p =  p.obtenerSiguiente();
+    public Nodo getNodoRaiz() {
+        return this.nodo_raiz;
+    }
+
+    public Comparador getComportamientoAdd() {
+        return this.comportamiento_add;
+    }
+
+    //Setters
+    public void setComportamientoAdd(Comparador comportamiento_add) { 
+        this.comportamiento_add = comportamiento_add;
+        this.invertirLista();
+    }
+
+    private void invertirLista() {
+        int cantidad_nodos = this.getCantidadNodos();
+        int posicion_final = cantidad_nodos - 1;
+        Nodo ultimo_nodo = null;
+        if (cantidad_nodos > 0) { 
+            ultimo_nodo = this.getNodoPorPosicion(posicion_final);
         }
-return cant;
-    }
-
-    public void eliminarTodasLasOcurrencias(Object obj) {
-		if(!this.isEmpty()) {
-            Nodo p = cabeza;
-            while(p!=null) {
-                while(p.obtenerSiguiente() != null) {
-                    if(p.obtenerValor().equals(obj)) {
-                        if (p.obtenerValor() == this.cabeza){
-                            this.eliminarCabeza();
-                        }else{
-                            p.setSiguiente(p.obtenerSiguiente().obtenerSiguiente());
-                        }
-
-                    } else {
-                        p = p.obtenerSiguiente();
-                    }
-                }
-                p = p.obtenerSiguiente();
-            }
-		}
-	}
-    
-    public String toString(){
-        return this.cabeza.obtenerValor().toString();
-    }
-
-    public Nodo buscarNodo (Object o){
-        Nodo actual = this.cabeza;
-        Integer cont = 0;
-        Nodo buscado = new Nodo(o);
-        while(cont != null){
-            if (actual.equals(buscado)){   //actual.obtenerValor == buscado.obtenerValor
-                System.out.println("Elemento encontrado en la pos "+ cont);		
-            return buscado;
-            }else{
-                actual = actual.obtenerSiguiente();
-            }
-            cont++;
+        while (posicion_final >= 0) {
+            Nodo nodo_actual = this.getNodoPorPosicion(posicion_final);
+            nodo_actual.invertirSiguienteAnterior();
+            posicion_final--;
         }
-        System.out.println("No se encontro el elemento ");		
-        return buscado;
+        if (ultimo_nodo != null) {
+            this.setNodoRaiz(ultimo_nodo);
+        }
     }
 
-
-
-
-
-    @Override
-    public Iterator<Object> iterator() {
-        return new IteratorNodos();
+    public void setNodoRaiz(Nodo nodo_raiz) {
+        this.nodo_raiz = nodo_raiz;
     }
+    private class IteradorNodos implements Iterator<Nodo> {
 
-    private class IteratorNodos  implements Iterator<Object>{
-            private Object siguiente = cabeza; //Indica el siguiente elemento 
+        private int posicion;
+
+        public IteradorNodos() {
+            this.posicion = 0;
+        }
+
         @Override
         public boolean hasNext() {
-         
-            return ((Nodo) siguiente).obtenerSiguiente() != null;
-        
+            return this.posicion < getCantidadNodos();
         }
 
         @Override
-        public Object next() {
-            int pos = 0;
-            ArrayList resultado = new ArrayList<>();
-            while(hasNext()){
-
-                Object obj = obtenerNodo(pos).obtenerValor();
-                resultado.add(obj);
-                        obj = obtenerNodo(pos).obtenerValor();
-                        siguiente = obj;
-                        pos++;
-            }
-                    return obj;
+        public Nodo next() {
+            this.posicion++;
+            return getNodoPorPosicion(this.posicion-1);
         }
     }
-
 }
