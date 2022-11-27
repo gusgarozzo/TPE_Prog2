@@ -43,7 +43,7 @@ public class ListaEnlazada implements Iterable<Nodo> {
         }
     }
 
-    public void addNodo(Comparable objComparable) {
+    public void agregarNodo(Comparable objComparable) {
         Nodo nodo_nuevo = new Nodo(objComparable);
         if (this.cabeza != null) { 
             boolean seAgregaComoSiguiente = this.comportamiento.add(this.cabeza, nodo_nuevo); 

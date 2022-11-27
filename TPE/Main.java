@@ -4,11 +4,11 @@ public class Main {
         //Inciso a
         ComparadorAscendente CompAscendente = new ComparadorAscendente();
         ListaEnlazada lista_numeros = new ListaEnlazada(CompAscendente);
-        lista_numeros.addNodo(10);
-        lista_numeros.addNodo(21);
-        lista_numeros.addNodo(1);
-        lista_numeros.addNodo(5);
-        lista_numeros.addNodo(11);
+        lista_numeros.agregarNodo(10);
+        lista_numeros.agregarNodo(21);
+        lista_numeros.agregarNodo(1);
+        lista_numeros.agregarNodo(5);
+        lista_numeros.agregarNodo(11);
 
         //Inciso b
         for (Nodo numero : lista_numeros) {
@@ -28,10 +28,10 @@ public class Main {
         //Inciso d
         System.out.println();
         ListaEnlazada lista_strings = new ListaEnlazada(CompAscendente);
-        lista_strings.addNodo("facil");
-        lista_strings.addNodo("es");
-        lista_strings.addNodo("parcial");
-        lista_strings.addNodo("prog 2");
+        lista_strings.agregarNodo("facil");
+        lista_strings.agregarNodo("es");
+        lista_strings.agregarNodo("parcial");
+        lista_strings.agregarNodo("prog 2");
 
         //Inciso e
         for (Nodo string : lista_strings) {
@@ -136,8 +136,8 @@ public class Main {
         grupo_olimpiadas1.agregarElemento(grupo_olimpiadas3);
 
         ListaEnlazada lista_estructuras = new ListaEnlazada(CompDescendente);
-        lista_estructuras.addNodo(grupo_olimpiadas1);
-        lista_estructuras.addNodo(grupo_unicen1);
+        lista_estructuras.agregarNodo(grupo_olimpiadas1);
+        lista_estructuras.agregarNodo(grupo_unicen1);
         for (Nodo estructura : lista_estructuras) {
             System.out.println("Estructura: " + estructura);
         }
