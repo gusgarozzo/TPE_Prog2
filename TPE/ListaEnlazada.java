@@ -20,22 +20,22 @@ public class ListaEnlazada implements Iterable<Nodo> {
         return new IteradorNodos();
     }
 
-    public void removeNodoPorValor(Comparable objComparable) {
+    public void eliminarNodoElement(Comparable objComparable) {
         Nodo siguiente_cabeza = this.cabeza.getSiguienteNodo();
         if (this.cabeza.getObjetoAcomparar().compareTo(objComparable) == 0) { 
             if (siguiente_cabeza != null) {
                 this.setNodoRaiz(siguiente_cabeza);
                 this.cabeza.setAnteriorNodo(null);
-                this.removeNodoPorValor(objComparable);
+                this.eliminarNodoElement(objComparable);
             } else { 
                 this.setNodoRaiz(null);
             }
         } else if (siguiente_cabeza != null) { 
-            siguiente_cabeza.removeNodoPorValor(objComparable);
+            siguiente_cabeza.eliminarNodoElement(objComparable);
         }
     }
 
-    public void removeNodoPorPosicion(int posicion) {
+    public void eliminarNodoPos(int posicion) {
         int posicion_nodo = 0;
         Nodo siguiente_cabeza = this.cabeza.getSiguienteNodo();
         if (posicion_nodo == posicion) {
@@ -47,7 +47,7 @@ public class ListaEnlazada implements Iterable<Nodo> {
             }
         } else if (siguiente_cabeza != null) { 
             posicion_nodo++;
-            siguiente_cabeza.removeNodoPorPosicion(posicion_nodo, posicion); 
+            siguiente_cabeza.eliminarNodoPos(posicion_nodo, posicion); 
         }
     }
 

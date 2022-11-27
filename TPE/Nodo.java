@@ -17,21 +17,21 @@ public class Nodo  {
         this.setAnteriorNodo(aux);
     }
 
-    public void removeNodoPorValor(Comparable objComparable) {
+    public void eliminarNodoElement(Comparable objComparable) {
         if (this.comparar.compareTo(objComparable) == 0) { 
             if (this.siguiente != null) { 
                 this.anterior.setSiguienteNodo(this.siguiente); 
-                this.anterior.removeNodoPorValor(objComparable); 
+                this.anterior.eliminarNodoElement(objComparable); 
                 this.siguiente.setAnteriorNodo(this.anterior); 
             } else {
                 this.anterior.setSiguienteNodo(null); 
             }
         } else if (this.siguiente != null) {
-            this.siguiente.removeNodoPorValor(objComparable);
+            this.siguiente.eliminarNodoElement(objComparable);
         }
     }
 
-    public void removeNodoPorPosicion(int posicion_nodo, int posicion) {
+    public void eliminarNodoPos(int posicion_nodo, int posicion) {
         if (posicion_nodo == posicion) { 
             if (this.siguiente != null) {
                 this.anterior.setSiguienteNodo(this.siguiente); 
@@ -41,7 +41,7 @@ public class Nodo  {
             }
         } else if (this.siguiente != null) {
             posicion_nodo++;
-            this.siguiente.removeNodoPorPosicion(posicion_nodo, posicion);
+            this.siguiente.eliminarNodoPos(posicion_nodo, posicion);
         }
     }
 

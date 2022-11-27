@@ -17,9 +17,9 @@ public class Main {
 
         //Inciso c
         System.out.println();
-        lista_numeros.removeNodoPorPosicion(0);
-        lista_numeros.removeNodoPorValor(5);
-        lista_numeros.removeNodoPorValor(11);
+        lista_numeros.eliminarNodoPos(0);
+        lista_numeros.eliminarNodoElement(5);
+        lista_numeros.eliminarNodoElement(11);
 
         for (Nodo numero : lista_numeros) {
             System.out.println("Numero: " + numero);
