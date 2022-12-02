@@ -1,178 +1,156 @@
-package TPE;
+
 
 import java.util.Comparator;
 import java.util.Iterator;
 
-public class ListaEnlazada implements Iterable<Object>{
-    private Nodo cabeza;
-    private Comparator<Object> criterio;
+public class ListaEnlazada<T> implements Iterable<T>{
 
-    public ListaEnlazada( Comparator<Object> criterio) {
-        this.cabeza = null;
-        this.criterio = criterio;
+    private Node<T> nodoInicial;
+    private Node<T> puntero;
+    private Orden<T> orden;
+    private Comparator<T> comparator;
+
+    public ListaEnlazada(Comparator<T> comparator){
+        this(new OrdenAscendente<>(), comparator);
     }
 
+    public ListaEnlazada(){
+        this.orden = new OrdenAscendente<>();
+        this.comparator = new ComparatorGenerico<>();
+    }
 
-    public void agregar(Object o){
-        TPE.Nodo nodo = new Nodo(o);
-        if(this.cabeza == null){    
-            this.cabeza =  nodo;
-        }else{
-            TPE.Nodo aux = this.cabeza;
-            TPE.Nodo ant = null;
-            while (aux != null && criterio.compare(aux.obtenerValor(), nodo.obtenerValor()) < 0 ){
-                ant = aux;
-                aux = aux.obtenerSiguiente();
-                
+    public ListaEnlazada(Orden<T> orden, Comparator<T> comparator){
+        this.nodoInicial = null;
+        this.puntero = null;
+        this.orden = orden;
+        this.comparator = comparator;
+    }
+
+    public void agregar(Node<T> node){
+        if (this.nodoInicial == null){
+            this.nodoInicial = node;
+        }else if(this.orden.menor(node, this.nodoInicial, this.comparator)){
+            node.setSiguiente(this.nodoInicial);
+            this.nodoInicial = node;
+        } else {
+            this.puntero = this.nodoInicial;
+            boolean found = false;
+            while (!found && (this.puntero.obterSiguiente() != null)) {
+                if (this.orden.menor(node, this.puntero.obterSiguiente(), this.comparator)){
+                    found = true;
+                } else {
+                    this.puntero = this.puntero.obterSiguiente();
+                }
             }
-            if (aux == null){
-                ant.agregarNodo(nodo);
+            node.setSiguiente(this.puntero.obterSiguiente());
+            this.puntero.setSiguiente(node);
+        }
+    }
+
+    public void eliminarNodo(int position){
+        if(position < 0)
+            return;
+        if(this.nodoInicial == null)
+            return;
+        if (position == 0) {
+            this.nodoInicial = this.nodoInicial.obterSiguiente();
+            return;
+        }
+        this.puntero = this.nodoInicial;
+        int punteroPosition = 0;
+        while (this.puntero != null && punteroPosition < (position-1)){
+            this.puntero = this.puntero.obterSiguiente();
+            punteroPosition++;
+        }
+        if(this.puntero != null){
+            Node<T> toDelete = this.puntero.obterSiguiente();
+            if(toDelete != null){
+                this.puntero.setSiguiente(toDelete.obterSiguiente());
+            }
+        }
+    }
+
+    public void eliminarNodo(Node<T> node){
+        if(this.nodoInicial == null)
+            return;
+        this.puntero = this.nodoInicial;
+        while (this.puntero.obterSiguiente() != null){
+            if (this.puntero == this.nodoInicial && this.comparator.compare(this.puntero.obtenerValor(), node.obtenerValor()) == 0){
+                this.nodoInicial = this.nodoInicial.obterSiguiente();
+                this.puntero = this.nodoInicial;
+            }else if(this.comparator.compare(this.puntero.obterSiguiente().obtenerValor(), node.obtenerValor()) == 0){
+                Node<T> toDelete = this.puntero.obterSiguiente();
+                this.puntero.setSiguiente(toDelete.obterSiguiente());
             }else{
-                nodo.agregarNodo(aux);
-                if (aux == this.cabeza){
-                    this.cabeza = nodo;
-                }
-                else{
-                    ant.setSiguiente(nodo);
-                }
+                this.puntero = this.puntero.obterSiguiente();
             }
         }
-    }
-    
-    public void eliminarCabeza(){
-        if (!isEmpty()){
-            this.cabeza = cabeza.obtenerSiguiente();
-        }
-    }
-    
-    public void eliminar(int index){
-        if (!verificar(index)){
-            if(index == 0){
-                this.eliminarCabeza();
-            }
-            else{
-                int cont = 0;
-                TPE.Nodo aux = cabeza;
-                while (cont < index){
-                    aux = aux.obtenerSiguiente();
-                    cont++;
-                }
-                aux.agregarNodo(aux.obtenerSiguiente().obtenerSiguiente());
-            }
+        if(this.comparator.compare(this.nodoInicial.obtenerValor(), node.obtenerValor()) == 0){
+            this.nodoInicial = null;
         }
     }
 
-    public boolean isEmpty(){
-        if (this.cabeza == null){
-            return true;
-        }
-        return false;
-    }
-
-    public boolean verificar(int index){
-        return (this.isEmpty() || index < 0);
-    }
-
-    public TPE.Nodo obtenerNodo (int index){
-        if (verificar(index)){
-            return null;
-        }
-        else{
-            int cont = 0;
-            TPE.Nodo buscado = this.cabeza;
-            while(cont < index){
-                buscado = buscado.obtenerSiguiente();
-                cont++;
-            }
-            return buscado;
-        }
-    }
-
-    public int buscarPos(Object o){
-        TPE.Nodo actual = this.cabeza;
-        Integer pos = 0;
-        while(pos != null){
-            if (actual.obtenerValor() == o){
-                return pos;
+    public int obtenerValorPorPos(Node<T> node){
+        this.puntero = this.nodoInicial;
+        int punteroPosition = 0;
+        while (this.puntero != null){
+            if(this.comparator.compare(this.puntero.obtenerValor(),node.obtenerValor()) == 0){
+                return punteroPosition;
             }else{
-                actual = actual.obtenerSiguiente();
-                pos++;
+                this.puntero = this.puntero.obterSiguiente();
+                punteroPosition++;
             }
         }
         return -1;
     }
 
-    public int cantidadRepetidos(Object o){
-        TPE.Nodo p = cabeza;
-        int cant = 0;
-        while(p!=null) {
-            if (p.obtenerValor() == o){
-                cant++;
-            }else{
-            }
-            p =  p.obtenerSiguiente();
-        }
-return cant;
+    private Node<T> getNodoInicial(){
+        return this.nodoInicial;
     }
 
-    public void eliminarTodasLasOcurrencias(Object obj) {
-		if(!this.isEmpty()) {
-            TPE.Nodo p = cabeza;
-            while(p!=null) {
-                while(p.obtenerSiguiente() != null) {
-                    if(p.obtenerValor() == obj) {
-                        if (p.obtenerValor() == this.cabeza){
-                            this.eliminarCabeza();
-                        }else{
-                            p.setSiguiente(p.obtenerSiguiente().obtenerSiguiente());
-                        }
-
-                    } else {
-                        p = p.obtenerSiguiente();
-                    }
-                }
-                p = p.obtenerSiguiente();
-            }
-		}
-	}
-    
-
-    public Nodo buscarNodo (Object o){
-        TPE.Nodo actual = this.cabeza;
-        Integer cont = 0;
-        TPE.Nodo buscado = new Nodo(o);
-        while(cont != null){
-            if (actual.equals(buscado)){
-                System.out.println("Elemento encontrado en la pos "+ cont);		
-            return buscado;
-            }else{
-                actual = actual.obtenerSiguiente();
-            }
-            cont++;
+    public void setorden(Orden<T> orden){
+        ListaEnlazada<T> aux = new ListaEnlazada<>(orden, this.comparator);
+        this.puntero = this.nodoInicial;
+        while (this.puntero != null){
+            Node<T> auxNode = new Node<>(this.puntero.obtenerValor());
+            aux.agregar(auxNode);
+            this.puntero = this.puntero.obterSiguiente();
         }
-        System.out.println("No se encontro el elemento ");		
-        return buscado;
+        this.nodoInicial = aux.getNodoInicial();
     }
 
+    public void setComparator(Comparator<T> comparator){
+        this.comparator = comparator;
+        this.setorden(this.orden);
+    }
 
     @Override
-    public Iterator<Object> iterator() {
-        return new IteratorNodos();
+    public Iterator<T> iterator() {
+        return new IteratorNodo<>(this.nodoInicial);
     }
 
-    private class IteratorNodos  implements Iterator<Object>{
-    		private int siguiente; //Indica el siguiente elemento 
+
+    public class IteratorNodo<T> implements Iterator<T> {
+
+        private Node<T> pointer;
+    
+        public IteratorNodo(Node<T> pointer) {
+            this.pointer = pointer;
+        }
+    
         @Override
         public boolean hasNext() {
-            return obtenerNodo(siguiente)!=null;
+            return this.pointer != null;
         }
-
+    
         @Override
-        public Object next() {
-            Object obj = obtenerNodo(siguiente).obtenerValor();
-            siguiente++;
-            return obj;
+        public T next() {
+            T value = this.pointer.obtenerValor();
+            this.pointer = this.pointer.obterSiguiente();
+            return value;
         }
     }
+
+
 
 }
